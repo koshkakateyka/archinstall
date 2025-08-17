@@ -7,7 +7,7 @@ echo 'перед началом, разметье диск, через fdisk и�
 echo 'как того как вы разметили всё, можете вернуться обратно сюда, а сейчас'
 echo 'напишите сюда свой основной раздел, где будет арч-линукс, например, через lsblk'
 echo 'у вас выходит такое:'
-echo '[slava@slava ~]$ lsblk
+echo '[name@name ~]$ lsblk
 NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
 sda           8:0    1  14.4G  0 disk 
 ├─sda1        8:1    1  14.4G  0 part 
@@ -42,10 +42,16 @@ echo "затем напишите место под boot/efi:"
 read efi
 echo "efi: $efi"
 
+echo "затем напишите сюда путь к диску через /dev, например: /dev/sda"
+echo "sda - название диска:"
+read devDiskDir
+echo "devDiskDir: $devDiskDir"
+
 echo "auto install arch:"
 echo "main: $main"
 echo "swap: $swap"
 echo "efi: $efi"
+echo "devDiskDir: $devDiskDir"
 echo "progress..."
 
 mkfs.ext4 $main
@@ -64,9 +70,31 @@ arch-chroot /mnt
 ln -sf /usr/share/zoneinfo/Europe/Sofia /etc/localtime
 hwclock --systohc
 
-cp /root/archinstall/locale.gen /etc/locale.gen
-nano /etc/locale.gen
+echo "en_US.UTF-8 UTF8" >> /etc/locale.gen
+# cp /root/archinstall/locale.gen /etc/locale.gen
+locale-gen
+
+touch /etc/locale.conf && echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+touch /etc/vconsole.conf && echo "KEYMAP=us" >> /etc/vconsole.conf
+touch /etc/hostname && echo "name" >> /etc/hostname
+
+echo "root:name" | chpasswd
+useradd -m -G wheel -s /bin/bash name
+echo "name:name" | chpasswd
+
+touch visudo && echo "%wheel ALL=(ALL:ALL) ALL" >> visudo
+
+su name 
+echo "name" | sudo pacman -Syu --noconfirm plasma sddm konsole kate vivaldi
+
+exit
+
+systemctl enable NetworkManager
+systemctl enable sddm
+grub-install $devDiskDir
+grub-mkconfig -o /boot/grub/grub.cfg
 
 
-
-date
+exit
+umount -a
+reboot
