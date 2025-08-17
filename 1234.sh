@@ -27,10 +27,10 @@ echo "hello world5"
 usermod -aG wheel name
 echo "hello world6"
 
-# трабла со входами туда-сюда
 su name | echo "name" | sudo -S sudo pacman -Syu --noconfirm plasma sddm konsole kate vivaldi
-
+# трабла с командой, echo не работает
 echo "hello world7"
+
 # трабла со входами туда-сюда
 exit
-# трабла со входами туда-сюда
+
