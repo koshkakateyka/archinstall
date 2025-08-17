@@ -23,22 +23,14 @@ touch visudo && echo "%wheel ALL=(ALL:ALL) ALL" >> visudo
 
 echo "hello world4"
 
-su -
 echo "hello world5"
 usermod -aG wheel name
 echo "hello world6"
+
+# трабла со входами туда-сюда
 su name | echo "name" | sudo -S sudo pacman -Syu --noconfirm plasma sddm konsole kate vivaldi
 
 echo "hello world7"
-
+# трабла со входами туда-сюда
 exit
-
-systemctl enable NetworkManager
-systemctl enable sddm
-grub-install $devDiskDir
-grub-mkconfig -o /boot/grub/grub.cfg
-
-
-exit
-umount -a
-reboot
+# трабла со входами туда-сюда
