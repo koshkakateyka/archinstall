@@ -67,4 +67,5 @@ pacstrap /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr 
 
 mkdir /mnt/host
 mount --bind / /mnt/host
-arch-chroot /mnt | bash /host/root/archinstall/1234.sh
+arch-chroot /mnt 
+bash /host/root/archinstall/1234.sh
