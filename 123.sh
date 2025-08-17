@@ -65,4 +65,6 @@ mount $efi /mnt/boot/efi
 
 pacstrap /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr nano networkmanager
 
-arch-chroot /mnt | bash 1234.sh
+mkdir /mnt/host
+mount --bind / /mnt/host
+arch-chroot /mnt | bash /host/root/archinstall/1234.sh

@@ -15,8 +15,9 @@ echo "name:name" | chpasswd
 
 touch visudo && echo "%wheel ALL=(ALL:ALL) ALL" >> visudo
 
-su name 
-echo "name" | sudo pacman -Syu --noconfirm plasma sddm konsole kate vivaldi
+su -
+usermod -aG wheel name
+su name | echo "name" | sudo -S sudo pacman -Syu --noconfirm plasma sddm konsole kate vivaldi
 
 exit
 
