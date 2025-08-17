@@ -59,4 +59,14 @@ mount $efi /mnt/boot/efi
 
 pacstrap /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr nano networkmanager
 
+arch-chroot /mnt
+
+ln -sf /usr/share/zoneinfo/Europe/Sofia /etc/localtime
+hwclock --systohc
+
+cp /root/archinstall/locale.gen /etc/locale.gen
+nano /etc/locale.gen
+
+
+
 date
